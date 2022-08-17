@@ -15,7 +15,7 @@ export default function SingInButton() {
     >
       <>
         <FaGithub color="#04d361" />
-        {session?.user}
+        {session?.user?.name}
         <FiX color="#737380" className={style.closeIcon} />
       </>
     </button>
