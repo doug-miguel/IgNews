@@ -21,7 +21,7 @@ type IUser = {
   };
 };
 
-export default async (req: NextApiRequest | any, res: NextApiResponse) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     const session: any = await getSession({ req });
 
