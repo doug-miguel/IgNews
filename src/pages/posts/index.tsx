@@ -8,7 +8,19 @@ import * as prismic from "@prismicio/client";
 
 import style from "./style.module.scss";
 
-export default function Posts() {
+import { RichText } from "prismic-dom";
+
+type IPost = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  updateAt: string;
+};
+interface IPosts {
+  posts: IPost[];
+}
+
+export default function Posts({ posts }: IPosts) {
   return (
     <>
       <Head>
@@ -16,30 +28,13 @@ export default function Posts() {
       </Head>
       <main className={style.container}>
         <div className={style.posts}>
-          <a href="#">
-            <time>12 de março de 2021</time>
-            <strong>TypeScript: por trás do superset de JavaScript</strong>
-            <p>
-              Um conjunto de ferramentas JavaScript que adicionou tipagem e
-              novos recursos na linguagem
-            </p>
-          </a>
-          <a href="#">
-            <time>12 de março de 2021</time>
-            <strong>TypeScript: por trás do superset de JavaScript</strong>
-            <p>
-              Um conjunto de ferramentas JavaScript que adicionou tipagem e
-              novos recursos na linguagem
-            </p>
-          </a>
-          <a href="#">
-            <time>12 de março de 2021</time>
-            <strong>TypeScript: por trás do superset de JavaScript</strong>
-            <p>
-              Um conjunto de ferramentas JavaScript que adicionou tipagem e
-              novos recursos na linguagem
-            </p>
-          </a>
+          {posts.map((post) => (
+            <a key={post.slug} href="#">
+              <time>{post.updateAt}</time>
+              <strong>{post.title}</strong>
+              <p>{post.excerpt}</p>
+            </a>
+          ))}
         </div>
       </main>
     </>
@@ -53,11 +48,25 @@ export const getStaticProps: GetStaticProps = async (req) => {
     [prismic.predicate.at("document.type", "post")],
     { fetch: ["post.title", "post.content"], pageSize: 100 }
   );
-  console.log(
-    "🚀 ~ file: index.tsx ~ line 56 ~ constgetStaticProps:GetStaticProps= ~ response",
-    JSON.stringify(response, null, 2)
-  );
+
+  const posts = response.results.map((post) => {
+    return {
+      slug: post.uid,
+      title: RichText.asText(post.data.title),
+      excerpt:
+        post.data.content.find((content: any) => content.type === "paragraph")
+          ?.text ?? "",
+      updateAt: new Date(post.last_publication_date).toLocaleDateString(
+        "pt-BR",
+        {
+          day: "2-digit",
+          month: "long",
+          year: "2-digit",
+        }
+      ),
+    };
+  });
   return {
-    props: {},
+    props: { posts },
   };
 };
