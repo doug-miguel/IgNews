@@ -8,6 +8,8 @@ import * as prismic from "@prismicio/client";
 
 import style from "./style.module.scss";
 
+import Link from "next/link";
+
 import { RichText } from "prismic-dom";
 
 type IPost = {
@@ -29,11 +31,13 @@ export default function Posts({ posts }: IPosts) {
       <main className={style.container}>
         <div className={style.posts}>
           {posts.map((post) => (
-            <a key={post.slug} href="#">
-              <time>{post.updateAt}</time>
-              <strong>{post.title}</strong>
-              <p>{post.excerpt}</p>
-            </a>
+            <Link href={`/posts/${post.slug}`} key={post.slug}>
+              <a>
+                <time>{post.updateAt}</time>
+                <strong>{post.title}</strong>
+                <p>{post.excerpt}</p>
+              </a>
+            </Link>
           ))}
         </div>
       </main>
