@@ -1,4 +1,5 @@
 import { GetStaticProps } from "next";
+import Link from "next/link";
 
 import Head from "next/head";
 
@@ -7,8 +8,6 @@ import { GetPrismicClient } from "../../services/prismic";
 import * as prismic from "@prismicio/client";
 
 import style from "./style.module.scss";
-
-import Link from "next/link";
 
 import { RichText } from "prismic-dom";
 
