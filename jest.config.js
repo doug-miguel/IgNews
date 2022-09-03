@@ -5,4 +5,7 @@ module.exports = {
     "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
   },
   testEnvironment: "jest-environment-jsdom-global",
+  moduleNameMapper: {
+    "^.+\\.(css|scss)$": "identity-obj-proxy"
+  }
 }
