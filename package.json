@@ -30,7 +30,8 @@
     "sass": "^1.54.4",
     "scss": "^0.2.4",
     "slice-machine-ui": "^0.4.2",
-    "stripe": "^10.2.0"
+    "stripe": "^10.2.0",
+    "ts-jest-mock": "^1.1.33"
   },
   "devDependencies": {
     "@testing-library/dom": "^8.17.1",
